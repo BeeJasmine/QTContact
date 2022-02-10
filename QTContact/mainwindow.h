@@ -16,6 +16,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
 
     void fillListContact();
+    void fillListContact( QVector<Contact*> contacttoPrint );
 
     ~MainWindow();
 
@@ -25,5 +26,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     ContactMap * pMap;
+
+    void initToolBar();
 };
 #endif // MAINWINDOW_H

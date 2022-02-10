@@ -1,5 +1,10 @@
 #include <QDebug>
 
+
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -16,32 +21,59 @@ MainWindow::MainWindow(QWidget *parent)
     pMap = new ContactMap();
 
     // default checkButtons activated
-    ui->chkPrivate->setChecked( false );
+    ui->chkPrivate->setChecked( true );
     ui->chkProfessional->setChecked(true);
+
+    // fill toolbar
+    initToolBar();
 
     // fill the listWidget
     // ui->listWidget->addItem( newContact->getNumero() );
     fillListContact();
+
+    // connection
+}
+
+void MainWindow::initToolBar()
+{
+    QToolBar * toolbar = ui->toolBar;
+
+    QLabel* label = new QLabel("Recherche :"); //, this);
+    QLineEdit* lineEd = new QLineEdit(); // this
+    lineEd->setMinimumWidth(150);
+    //lineEd->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred);
+    lineEd->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
+    toolbar->addWidget(label);
+    toolbar->addWidget(lineEd);
+    toolbar->addSeparator();
+
+    QAction *qActionAdd = toolbar->addAction(QIcon(":/images/ress/image/plus.png"),"Nouveau contact");
+    //QPushButton *btn = new QPushButton( QIcon(":/images/ress/image/plus.png"),"");
+    //toolbar->addWidget(btn);
+    //toolBar->setFixedHeight( 25 ); // ok works, not seem easy for nice design
+
+    // connection
+    connect( lineEd, &QLineEdit::textChanged,
+             [this](const QString & text) {
+                qDebug() << "text changed" << text;
+                fillListContact ( pMap->getFilterName(text) );
+            });
 }
 
 void MainWindow::fillListContact()
 {
-    // clear previous ?
-    ui->listContact->clear();
+    fillListContact( pMap->getAllContact() );
+}
 
-    bool need_cast = true;
-    if( ui->chkPrivate->isChecked() && ui->chkProfessional->isChecked() )
-        need_cast = false;
+void MainWindow::fillListContact( QVector<Contact*> contactToPrint )
+{
+    // clear previous
+    ui->listContact->clear();
 
     bool IamPro, IamFriend;
 
-    QVector<Contact *> vecToPrint;
+    for( Contact * ptContact : contactToPrint ) {
 
-    //auto filterPrivate =
-    //for( auto ptContact : pMap->getAllContact() ) {
-    for( Contact * ptContact : pMap->getAllContact() ) {
-
-        qDebug() << " new contact need_cast " << need_cast;
         IamPro = false;
         IamFriend = false;
 
@@ -56,14 +88,17 @@ void MainWindow::fillListContact()
         }
 
         if( IamFriend && ui->chkProfessional->isChecked() )
-            ui->listContact->addItem( QString("%1, %2").arg(ptContact->getLastName())
-                                                       .arg(ptContact->getFirstName()));
+            ui->listContact->addItem(
+                    new QListWidgetItem( QIcon(":/images/ress/image/homersimpson.png"),
+                                QString("%1, %2").arg(ptContact->getLastName())
+                                                 .arg(ptContact->getFirstName())));
 
         if( IamPro && ui->chkPrivate->isChecked() )
-            ui->listContact->addItem( QString("%1, %2").arg(ptContact->getLastName())
-                                                       .arg(ptContact->getFirstName()));
+            ui->listContact->addItem(
+                        new QListWidgetItem( QIcon(":/images/ress/image/boss.png"),
+                                    QString("%1, %2").arg(ptContact->getLastName())
+                                                     .arg(ptContact->getFirstName())));
     } //end for loop contact
-
 }
 
 MainWindow::~MainWindow()
