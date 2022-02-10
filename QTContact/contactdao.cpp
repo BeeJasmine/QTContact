@@ -9,7 +9,7 @@
 #include "professionalcontact.h"
 
 
-const QString DATABASE_FILENAME = "/home/michael/projects_afc/QtContact/dbContacts.db";
+const QString DATABASE_FILENAME = "../dbContacts.db";
 const QString DB = "QSQLITE";
 
 

@@ -3,6 +3,7 @@
 
 #include <QLabel>
 #include <QLineEdit>
+#include <QMessageBox>
 #include <QPushButton>
 
 #include "mainwindow.h"
@@ -52,6 +53,10 @@ void MainWindow::initToolBar()
     //toolbar->addWidget(btn);
     //toolBar->setFixedHeight( 25 ); // ok works, not seem easy for nice design
 
+    //qActionAdd->triggered()
+
+
+
     // connection
     connect( lineEd, &QLineEdit::textChanged,
              [this](const QString & text) {
@@ -87,12 +92,13 @@ void MainWindow::fillListContact( QVector<Contact*> contactToPrint )
             IamFriend = true;
         }
 
+         qDebug()<<"Je suis la valeur de IamFriend"<<IamFriend; //TRUE (peut-être car la dernière valeur de la map est un ami ??)
         if( IamFriend && ui->chkProfessional->isChecked() )
             ui->listContact->addItem(
                     new QListWidgetItem( QIcon(":/images/ress/image/homersimpson.png"),
                                 QString("%1, %2").arg(ptContact->getLastName())
                                                  .arg(ptContact->getFirstName())));
-
+        qDebug()<<"Je suis la valeur de IamPro"<<IamPro; //FALSE (peut-être car la dernière valeur de la map est un ami et non un pro??)
         if( IamPro && ui->chkPrivate->isChecked() )
             ui->listContact->addItem(
                         new QListWidgetItem( QIcon(":/images/ress/image/boss.png"),
@@ -104,4 +110,33 @@ void MainWindow::fillListContact( QVector<Contact*> contactToPrint )
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_actionQuitter_triggered()
+{
+      this->close();
+}
+
+void MainWindow::closeEvent(QCloseEvent * eventClose)
+{
+
+    QMessageBox msgBox(this);
+    msgBox.setText("Voulez vous Quitter ?");
+    msgBox.setInformativeText("Quitter ?");
+    msgBox.setIcon(QMessageBox::Question);
+    msgBox.setStandardButtons(QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Cancel);
+
+    int reponse = msgBox.exec();
+
+    switch(reponse)
+    {
+        case QMessageBox::Yes:
+            eventClose->accept();
+            break;
+        default:
+            eventClose->ignore();
+            break;
+    }
+
 }

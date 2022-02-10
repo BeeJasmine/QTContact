@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QCloseEvent>
 #include <QMainWindow>
 #include "contactmap.h"
 
@@ -21,7 +22,10 @@ public:
     ~MainWindow();
 
 private slots:
+    void on_actionQuitter_triggered();
 
+protected:
+    void closeEvent(QCloseEvent *);
 
 private:
     Ui::MainWindow *ui;
