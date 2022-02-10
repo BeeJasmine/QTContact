@@ -7,7 +7,7 @@
 class ProfessionalContact : public Contact
 {
 public:
-    ProfessionalContact(QString, QString, QString);
+    ProfessionalContact();
     ~ProfessionalContact();
 
     QString getCompanyName() const;

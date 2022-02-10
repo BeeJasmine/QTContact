@@ -1,8 +1,8 @@
 #include "professionalcontact.h"
 #include <QDebug>
 
-ProfessionalContact::ProfessionalContact(QString name, QString companyName, QString emailAdress)
-    :Contact(name)
+ProfessionalContact::ProfessionalContact()
+    :Contact()
 {
     this->setCompanyName(companyName);
     this->setEmailAdress(emailAdress);

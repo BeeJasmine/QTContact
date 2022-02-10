@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "contactmap.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -13,6 +14,9 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+
+    void fillListContact();
+
     ~MainWindow();
 
 private slots:
@@ -20,5 +24,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    ContactMap * pMap;
 };
 #endif // MAINWINDOW_H

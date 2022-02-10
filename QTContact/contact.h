@@ -2,11 +2,12 @@
 #define CONTACT_H
 
 #include <QObject>
+#include <QChar>
 
 class Contact
 {
 public:
-    Contact(QString);
+    Contact();
     virtual ~Contact();
 
     QString getLastName() const;
@@ -15,8 +16,8 @@ public:
     QString getFirstName() const;
     void setFirstName(const QString &value);
 
-    bool getGender() const;
-    void setGender(bool value);
+    QChar getGender() const;
+    void setGender(QChar value);
 
     // Adress
     QString getPostalCode() const;
@@ -40,7 +41,7 @@ protected:
     int IdContact;
     QString lastName;
     QString firstName;
-    bool gender;
+    QChar gender;
     QString postalCode;
     QString city;
     QString labelAdress;

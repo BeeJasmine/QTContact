@@ -8,16 +8,19 @@
 class PrivateContact : public Contact
 {
 public:
-    PrivateContact(QString, QDate);
+    PrivateContact();
     ~PrivateContact();
+
 
     void affiche(QString="") override;
 
-    private:
+
+    QDate getBirthDate() const;
+    void setBirthDate(const QDate &value);
+
+private:
 
     QDate birthDate;
-
-
 
 };
 

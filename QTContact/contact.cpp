@@ -1,10 +1,7 @@
 #include "contact.h"
 
-Contact::Contact(QString name)
-{
-    this->setLastName(name);
-
-}
+Contact::Contact()
+{}
 
 Contact::~Contact()
 {
@@ -31,12 +28,12 @@ void Contact::setFirstName(const QString &value)
     firstName = value;
 }
 
-bool Contact::getGender() const
+QChar Contact::getGender() const
 {
     return gender;
 }
 
-void Contact::setGender(bool value)
+void Contact::setGender(QChar value)
 {
     gender = value;
 }
