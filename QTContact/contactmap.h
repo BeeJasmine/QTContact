@@ -14,6 +14,9 @@ public:
     //template<typename Func>
     QVector<Contact*> getAllContact();
 
+    /** accept for any occurence of the substring text in firstName or LastName **/
+    QVector<Contact*> getFilterName(const QString & text);
+
 private:
     bool initFromDB();
 

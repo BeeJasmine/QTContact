@@ -33,6 +33,20 @@ QVector<Contact *> ContactMap::getAllContact()
     return vectorReturn;
 }
 
+QVector<Contact *> ContactMap::getFilterName(const QString &text)
+{
+
+    QVector<Contact *> vectorReturn;
+    for(auto contact : mapContact ) {
+
+        if ( ( contact->getLastName().contains(text, Qt::CaseInsensitive)
+         ||  (contact->getFirstName().contains(text, Qt::CaseInsensitive)))
+             )
+        vectorReturn.push_back( contact );
+    }
+    return vectorReturn;
+}
+
 ContactMap::~ContactMap()
 {
     //qDeleteAll( mapContact );
