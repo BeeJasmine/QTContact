@@ -104,7 +104,7 @@ void MainWindow::initToolBar()
 
     QAction *dialogAdd = toolbar->addAction("Nouveau contact");
     toolbar->addAction(dialogAdd);
-    dialogAdd->setShortcut(QKeySequence("Ctrl+Q"));
+    dialogAdd->setShortcut(QKeySequence("Ctrl+A"));
     dialogAdd->setIcon(QIcon(":/images/ress/image/plus.png"));
     QObject::connect(dialogAdd, SIGNAL(triggered()), this, SLOT(open_dialog()));
 
