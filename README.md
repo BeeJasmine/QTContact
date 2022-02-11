@@ -1,6 +1,22 @@
 # QTContact
 
-TODO:
+## Usage
+
+Retrouvez les instructions en console pour charger votre base de données.
+A la première ligne se trouve le chemin où trouver le fichier `.ini ` , vous pourrez y insérer votre chemin vers votre base de donneés.
+Relancer alors le programme (fonctionne sans encombre sur distribution Linux !)
+
+
+## TODO:
+
+- ajouter le choix du genre lors de l'insertion
+- colorer les lignes pro/perso de la liste (optionnel)
+- rendre la classe Contact Abstraite
+- exporter la db avec commande sqlite3 .excel (? chercher la possibilité)
+
+
+
+## CLOSED :
 
 Formulaire ajout :
 - 1 lineEdit / champs 
@@ -18,13 +34,6 @@ Formulaire ajout :
 - ajouter les signals aux checkboxs PRIO
 - double-click sur une ligne de la listWidget -> affichage des détails 
 - ajouter fonctionnalité de suppression d'un contact
-- colorer les lignes pro/perso de la liste (optionnel)
-- rendre la classe Contact Abstraite
-- exporter la db avec commande sqlite3 .excel (? chercher la possibilité)
-
-
-
-CLOSED :
 - UML des classes nécessaire d'après la table Contact
 - Maquette graphique
 - Schéma fonctionnel de l'application
