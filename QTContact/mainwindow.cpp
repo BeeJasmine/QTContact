@@ -50,6 +50,55 @@ MainWindow::MainWindow(QWidget *parent)
     // connection
 }
 
+
+void MainWindow::open_dialog()
+{
+    QDialog *dialogue = new QDialog(this);
+    dialogue->setModal(true);
+    QPalette pal = dialogue->palette();
+    pal.setColor(dialogue->backgroundRole(),Qt::white);
+    dialogue->setPalette(pal);
+
+      QLabel *title = new QLabel("Informations relatives au contact");
+      QLabel *nameLabel = new QLabel("Nom:");
+      QLineEdit *nameLineEdit = new QLineEdit;
+      QLabel *prenomLabel = new QLabel("Prénom:");
+      QLineEdit *prenomLineEdit = new QLineEdit;
+      QLabel *birthLabel = new QLabel("Date de naissance :");
+      QLineEdit *birthLineEdit = new QLineEdit;
+      QLabel *cpnyLabel = new QLabel("Entreprise :");
+      QLineEdit *cpnyLineEdit = new QLineEdit;
+
+      QPushButton *btnSave = new QPushButton("Ajouter");
+      QPushButton *btnQuit = new QPushButton("Fermer");
+
+      QGridLayout *layout = new QGridLayout;
+      layout->addWidget(title,0, 0);
+      layout->addWidget(nameLabel, 2, 0);
+      layout->addWidget(nameLineEdit, 2, 2,1,3);
+      layout->addWidget(prenomLabel, 3, 0);
+      layout->addWidget(prenomLineEdit, 3,2, 1,3);
+      layout->addWidget(birthLabel, 4, 0);
+      layout->addWidget(birthLineEdit, 4, 2);
+
+      layout->addWidget(cpnyLabel, 5, 0);
+      layout->addWidget(cpnyLineEdit, 5, 2);
+
+      //layout->addWidget(Label, 4, 0);
+      //^layout->addWidget(LineEdit, 4, 2);
+
+      layout->addWidget(btnSave, 8, 3);
+      layout->addWidget(btnQuit, 8, 4);
+
+      dialogue->setLayout(layout);
+      dialogue->show();
+
+      //QObject::connect(btnSave, SIGNAL(clicked()), dialogue, SLOT());
+      QObject::connect(btnQuit, SIGNAL(clicked()), dialogue, SLOT(close()));
+
+}
+
+
 void MainWindow::initToolBar()
 {
     QToolBar * toolbar = ui->toolBar;
@@ -63,13 +112,16 @@ void MainWindow::initToolBar()
     toolbar->addWidget(lineEd);
     toolbar->addSeparator();
 
-    QAction *qActionAdd = toolbar->addAction(QIcon(":/images/ress/image/plus.png"),"Nouveau contact");
+    //QAction *qActionAdd = toolbar->addAction(QIcon(":/images/ress/image/plus.png"),"Nouveau contact");
     //QPushButton *btn = new QPushButton( QIcon(":/images/ress/image/plus.png"),"");
     //toolbar->addWidget(btn);
     //toolBar->setFixedHeight( 25 ); // ok works, not seem easy for nice design
 
-    //qActionAdd->triggered()
-
+    QAction *dialogAdd = toolbar->addAction("Nouveau contact");
+    toolbar->addAction(dialogAdd);
+    dialogAdd->setShortcut(QKeySequence("Ctrl+A"));
+    dialogAdd->setIcon(QIcon(":/images/ress/image/plus.png"));
+    QObject::connect(dialogAdd, SIGNAL(triggered()), this, SLOT(open_dialog()));
 
 
     // connection
@@ -77,8 +129,9 @@ void MainWindow::initToolBar()
              [this](const QString & text) {
                 qDebug() << "text changed" << text;
                 fillListContact ( pMap->getFilterName(text) );
-            });
+    });
 }
+
 
 void MainWindow::fillListContact()
 {
@@ -107,15 +160,14 @@ void MainWindow::fillListContact( QVector<Contact*> contactToPrint )
             IamFriend = true;
         }
 
-        // qDebug()<<"Je suis la valeur de IamFriend"<<IamFriend; //TRUE (peut-être car la dernière valeur de la map est un ami ??)
-        if( IamPro && ui->chkProfessional->isChecked() )
+        if( IamFriend && ui->chkPrivate->isChecked() )
             // may factorize, addItemToListContact( private/pro )
             ui->listContact->addItem(
                     new QListWidgetItem( QIcon(":/images/ress/image/homersimpson.png"),
                                 QString("%1, %2").arg(ptContact->getLastName())
                                                  .arg(ptContact->getFirstName())));
-        // qDebug()<<"Je suis la valeur de IamPro"<<IamPro; //FALSE (peut-être car la dernière valeur de la map est un ami et non un pro??)
-        if( IamFriend && ui->chkPrivate->isChecked() )
+
+        if( IamPro && ui->chkProfessional->isChecked() )
             ui->listContact->addItem(
                         new QListWidgetItem( QIcon(":/images/ress/image/boss.png"),
                                     QString("%1, %2").arg(ptContact->getLastName())
@@ -156,3 +208,77 @@ void MainWindow::closeEvent(QCloseEvent * eventClose)
     }
 
 }
+
+
+
+
+/* POUR AJOUTER UNE ENTREE
+
+void MainWindow::on_btnAdd_clicked()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("../dbContacts.db");
+    bool ok = db.open();
+
+    //qDebug() << ok;
+
+    if (ok)
+    {
+        QString req = "insert into contacts(firstname, lastname) VALUES(:pPren, :pNom)";
+
+        QString nom = ui->lineEdit->text();
+        QString pren = ui->txtpren->text();
+
+        QSqlQuery query(db);
+        query.prepare(req);
+
+        query.bindValue(":pNom", nom);
+        query.bindValue(":pPren", pren);
+
+        bool reqOk = query.exec();
+        qDebug() << reqOk;
+
+        if (reqOk)
+        {
+            int nbInserted = query.numRowsAffected();
+            qDebug() << "Nb Insert : " << nbInserted;
+        }
+
+        db.close();
+    }
+}
+
+
+MODALE OU NON MODALE ???
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    DialogFermer dialogModal;
+
+    dialogModal.exec();
+
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+
+    //DialogFermer dialogModal;
+
+    //dialogModal.show();
+
+    dialogNonModal = new DialogFermer(this);
+    ui->label->setText(dialogNonModal->getMessage());
+
+
+    dialogNonModal->show();
+
+    dialogNonModal->changerCouleur("blue");
+
+    QLabel* lbl = dialogNonModal->getLabel();
+
+    lbl->setText("Coucou");
+    lbl->setStyleSheet("color:red;");
+}
+
+*/

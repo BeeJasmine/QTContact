@@ -4,6 +4,7 @@
 #include <QCloseEvent>
 #include <QMainWindow>
 #include "contactmap.h"
+#include "dialogadd.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,6 +24,7 @@ public:
 
 private slots:
     void on_actionQuitter_triggered();
+    void open_dialog();
 
 protected:
     void closeEvent(QCloseEvent *);
@@ -32,5 +34,8 @@ private:
     ContactMap * pMap;
 
     void initToolBar();
+    DialogAdd *dialogAdd;
+
+
 };
 #endif // MAINWINDOW_H
