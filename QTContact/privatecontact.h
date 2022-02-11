@@ -11,9 +11,7 @@ public:
     PrivateContact();
     ~PrivateContact();
 
-
-    void affiche(QString="") override;
-
+    QString affiche(QString="") override;
 
     QDate getBirthDate() const;
     void setBirthDate(const QDate &value);

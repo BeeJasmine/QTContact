@@ -1,3 +1,6 @@
+#include <QString>
+#include <sstream>
+
 #include "contact.h"
 
 Contact::Contact()
@@ -28,12 +31,12 @@ void Contact::setFirstName(const QString &value)
     firstName = value;
 }
 
-QChar Contact::getGender() const
+QString Contact::getGender() const
 {
     return gender;
 }
 
-void Contact::setGender(QChar value)
+void Contact::setGender(QString value)
 {
     gender = value;
 }
@@ -68,9 +71,21 @@ void Contact::setComplementAdress(const QString &value)
     complementAdress = value;
 }
 
-void Contact::affiche(QString)
+QString Contact::affiche(QString)
 {
-
+    QString output;
+    output = getLastName() + ", " + getFirstName() +  " - ";
+    QString genderStr = ( getGender() == "M" ) ? "Homme"
+                                               : "Femme";
+    output.append( genderStr + "\n");
+    output += "-------------------------------\n";
+    if( ! getLabelAdress().isEmpty() )
+        output += "\n" + getLabelAdress() + "\n";
+    if( ! getComplementAdress().isEmpty() )
+        output += getComplementAdress() + "\n";
+    //output += "\n";
+    output += getCity() + " " + getPostalCode();
+    return output;
 }
 
 int Contact::getIdContact() const

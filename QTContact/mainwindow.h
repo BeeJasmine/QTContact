@@ -3,6 +3,7 @@
 
 #include <QCloseEvent>
 #include <QLineEdit>
+#include <QListWidgetItem>
 #include <QMainWindow>
 #include "contactmap.h"
 #include "dialogadd.h"
@@ -26,6 +27,8 @@ public:
 private slots:
     void on_actionQuitter_triggered();
     void slotCkeckBoxOfListContact();
+    void selectedContact( QListWidgetItem *item);
+    void updateDetailsContact( Contact * contact );
     //void open_dialog();
 
     void on_action_Ajouter_contact_triggered();

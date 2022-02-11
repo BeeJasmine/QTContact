@@ -16,8 +16,8 @@ public:
     QString getFirstName() const;
     void setFirstName(const QString &value);
 
-    QChar getGender() const;
-    void setGender(QChar value);
+    QString getGender() const;
+    void setGender(QString value);
 
     // Adress
     QString getPostalCode() const;
@@ -32,7 +32,7 @@ public:
     QString getComplementAdress() const;
     void setComplementAdress(const QString &value);
 
-    virtual void affiche(QString="");
+    virtual QString affiche(QString="");
 
     int getIdContact() const;
     void setIdContact(int value);
@@ -41,7 +41,7 @@ protected:
     int IdContact;
     QString lastName;
     QString firstName;
-    QChar gender;
+    QString gender;
     QString postalCode;
     QString city;
     QString labelAdress;

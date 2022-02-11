@@ -76,7 +76,7 @@ void ContactDAO::fillCommonDataFromQuery(Contact *contact, QSqlQuery &query) con
     contact->setIdContact( query.value("idContact").toInt() );
     contact->setLastName( query.value("Nom").toString() );
     contact->setFirstName( query.value("Prenom").toString() );
-    contact->setGender( query.value("Sexe").toChar() );
+    contact->setGender( query.value("Sexe").toString() );
     contact->setLabelAdress(  query.value("rue").toString() );
     contact->setComplementAdress(  query.value("Complement").toString() );
     contact->setCity( query.value("Ville").toString() );

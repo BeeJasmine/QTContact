@@ -12,9 +12,12 @@ PrivateContact::~PrivateContact()
 
 }
 
-void PrivateContact::affiche(QString)
+QString PrivateContact::affiche(QString)
 {
-
+    QString str = Contact::affiche();
+    str.append( "\n\n--- à ne pas oublier ---\n");
+    str.append( getBirthDate().toString() + "\n");
+    return str;
 }
 
 QDate PrivateContact::getBirthDate() const

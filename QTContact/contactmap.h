@@ -17,6 +17,9 @@ public:
     /** accept for any occurence of the substring text in firstName or LastName **/
     QVector<Contact*> getFilterName(const QString & text);
 
+    Contact* loadContactWithName( const QString& lastName,
+                                  const QString& firstName );
+
 private:
     bool initFromDB();
 

@@ -47,6 +47,24 @@ QVector<Contact *> ContactMap::getFilterName(const QString &text)
     return vectorReturn;
 }
 
+Contact *ContactMap::loadContactWithName(const QString &lastName, const QString &firstName)
+{
+    //int contactId = 0;
+    //Contact * contact;
+
+    for( auto it = mapContact.begin(); it != mapContact.end(); it++ ) {
+        if( ( it.value()->getLastName() == lastName)
+         || ( it.value()->getFirstName() == firstName ) ) {
+            //contactId = it.key();
+            //break;
+            return it.value();
+        }
+
+    }
+    //int contactId = it.key();
+    return nullptr;
+}
+
 ContactMap::~ContactMap()
 {
     //qDeleteAll( mapContact );

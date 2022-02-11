@@ -16,7 +16,7 @@ public:
     QString getEmailAdress() const;
     void setEmailAdress(const QString &value);
 
-    void affiche(QString="") override;
+    QString affiche(QString="") override;
 
 private:
     QString companyName;

@@ -50,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // fill the listWidget with all contacts
     fillListContact();
+    connect( ui->listContact, &QListWidget::itemDoubleClicked,
+             this, &MainWindow::selectedContact);
 }
 
 /*
@@ -200,6 +202,25 @@ void MainWindow::slotCkeckBoxOfListContact()
     // default, just refresh with all
     else
         fillListContact();
+}
+
+void MainWindow::selectedContact( QListWidgetItem *item)
+{
+    qDebug() << "Doubleclick text: " << item->text();
+    qDebug() << "Doubleclick text: " << item->data(Qt::UserRole).toStringList();
+    QStringList lastAndfirstName = item->text().split(",");
+    Contact * contact = pMap->loadContactWithName( lastAndfirstName.at(0).trimmed(), lastAndfirstName.at(1).trimmed());
+    qDebug() << "contact: city: " << contact->getCity();
+    updateDetailsContact( contact );
+}
+
+void MainWindow::updateDetailsContact( Contact * contact )
+{
+    QPlainTextEdit* details = ui->fieldDetailContact;
+    //details->clear(); done by doc->setTextPlain() ?
+
+    QTextDocument* doc = details->document();
+    doc->setPlainText( contact->affiche() );
 }
 
 void MainWindow::closeEvent(QCloseEvent * eventClose)

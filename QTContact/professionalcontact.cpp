@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "professionalcontact.h"
 #include <QDebug>
 
@@ -34,7 +36,12 @@ void ProfessionalContact::setEmailAdress(const QString &value)
     emailAdress = value;
 }
 
-void ProfessionalContact::affiche(QString)
+QString ProfessionalContact::affiche(QString)
 {
+    QString str = Contact::affiche();
+    str.append( "\n\n--- details relation ---\n");
+    str.append( "nom de la société: " + getCompanyName() + "\n");
+    str.append( "email: " + getEmailAdress() + "\n");
 
+    return str;
 }
