@@ -108,14 +108,14 @@ void MainWindow::fillListContact( QVector<Contact*> contactToPrint )
         }
 
         // qDebug()<<"Je suis la valeur de IamFriend"<<IamFriend; //TRUE (peut-être car la dernière valeur de la map est un ami ??)
-        if( IamFriend && ui->chkProfessional->isChecked() )
+        if( IamPro && ui->chkProfessional->isChecked() )
             // may factorize, addItemToListContact( private/pro )
             ui->listContact->addItem(
                     new QListWidgetItem( QIcon(":/images/ress/image/homersimpson.png"),
                                 QString("%1, %2").arg(ptContact->getLastName())
                                                  .arg(ptContact->getFirstName())));
         // qDebug()<<"Je suis la valeur de IamPro"<<IamPro; //FALSE (peut-être car la dernière valeur de la map est un ami et non un pro??)
-        if( IamPro && ui->chkPrivate->isChecked() )
+        if( IamFriend && ui->chkPrivate->isChecked() )
             ui->listContact->addItem(
                         new QListWidgetItem( QIcon(":/images/ress/image/boss.png"),
                                     QString("%1, %2").arg(ptContact->getLastName())
