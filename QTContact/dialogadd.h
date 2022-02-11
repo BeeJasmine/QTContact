@@ -2,6 +2,9 @@
 #define DIALOGADD_H
 
 #include <QDialog>
+#include "contact.h"
+
+
 
 namespace Ui {
 class DialogAdd;
@@ -14,6 +17,11 @@ class DialogAdd : public QDialog
 public:
     explicit DialogAdd(QWidget *parent = nullptr);
     ~DialogAdd();
+    //void insertContact2(Contact * contact);
+
+private slots:
+    void on_buttonBox_accepted();
+    void refreshRadioBtn(bool);
 
 private:
     Ui::DialogAdd *ui;
