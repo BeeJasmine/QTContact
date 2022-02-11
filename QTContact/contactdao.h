@@ -7,16 +7,13 @@
 class QSqlDatabase;
 class QSqlQuery;
 
-
 /**
  * @brief The ContactDAO class
+ * Only 1 DAO, made as singleton with a "static" connection to the DB
  *
- * Usage , from MapModel :
- *
+ * Usage , from anywhere :
  *  ContactDAO::instance().getAllContacts()
- *                        .ass
  */
-
 class ContactDAO
 {
 public:

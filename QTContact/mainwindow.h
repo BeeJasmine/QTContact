@@ -29,7 +29,6 @@ private slots:
     void slotCkeckBoxOfListContact();
     void selectedContact( QListWidgetItem *item);
     void updateDetailsContact( Contact * contact );
-    //void open_dialog();
 
     void on_action_Ajouter_contact_triggered();
 
@@ -42,6 +41,7 @@ private:
     QLineEdit* inputSearch; // search name filed in toolbar
 
     void initToolBar();
+    void loadUserSettings();
     DialogAdd *dialogAdd;
 
 

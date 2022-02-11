@@ -1,0 +1,194 @@
+/* ================================================ *
+author:lei
+lastedited:2020.2
+* ================================================ */
+/*hover*/
+/*actived*/
+/*gradient start*/
+/*gradient end*/
+
+QWidget
+{
+    color: #222;
+    background-color: #FDFDFD;
+}
+
+QFrame{
+    color: #222;
+    background-color: #FDFDFD;/*不能设置为transparent*/
+}
+QMainWindow::separator{
+    border: 1px solid #999999;
+    border-style: outset;
+    width: 4px;
+    height: 4px;
+}
+QMainWindow::separator:hover{
+    background: #8BF;
+}
+
+/* =============================================== */
+/* Label                                           */
+/* =============================================== */
+QLabel {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 1px;
+}
+
+
+/* A QLabel is a QFrame ... */
+/* A QToolTip is a QLabel ... */
+QToolTip {
+    border: 1px solid #999999;
+    padding: 5px;
+    border-radius: 3px;
+    opacity:210;
+}
+
+/* =============================================== */
+/* TextBox                                         */
+/* =============================================== */
+QLineEdit {
+    background: #FDFDFD;
+    selection-background-color: #8BF;
+    border: 1px solid #999999;
+    border-radius: 2px;
+    border-style: inset;
+    padding: 0 1px;
+}
+
+QLineEdit:hover{
+    border-color: #8BF;
+}
+QLineEdit:focus{
+    border-color: #EA2;
+}
+/*QLineEdit[readOnly="true"] { color: gray }*/
+QLineEdit[echoMode="2"]{
+    lineedit-password-character: 9679;
+}
+
+QLineEdit:read-only {
+    color: lightgray;
+}
+
+QLineEdit:disabled{
+    color: lightgray;
+    background: lightgray;
+}
+
+QTextEdit{
+    selection-background-color:#8BF;
+    border: 1px solid #999999;
+    border-style: inset;
+}
+QTextEdit:hover{
+    border-color: #8BF;
+}
+QTextEdit:focus{
+    border-color: #EA2;
+}
+/* =============================================== */
+/* Button                                          */
+/* =============================================== */
+QPushButton {
+    border: 1px solid #999999;
+    border-radius: 2px;
+    /*background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, 
+        stop: 0 #EEEEEF, stop: 0.05 #DADADF,stop: 0.5 #DADADF, 
+        stop: 0.9 #EEEEEF, stop: 1 #EEEEEF);*/
+    padding: 1px 4px;
+    min-width: 50px;
+    min-height: 16px;
+}
+
+QPushButton:hover{
+    background-color: #8BF;
+    border-color: #59F;
+}
+
+QPushButton:pressed
+{
+    border-width: 1px;      
+    background-color: #59F;
+    border-color: #999999;
+}
+
+QPushButton:focus, QPushButton:default {
+    border-color: #EA2; /* make the default button prominent */
+}
+
+
+QToolButton,QToolButton:unchecked { /* ToolBar里的按钮和带下拉菜单的按钮 */
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: transparent;
+    margin: 1px;
+}
+QToolButton:checked{
+    background-color: #8BF;
+    border-color: #59F;
+}
+QToolButton:hover{
+    background-color: #8BF;
+    border-color: #59F;
+}
+
+QToolButton:pressed,QToolButton:checked:hover{
+    background-color: #59F;
+    border-color: #EA2;
+}
+QToolButton:checked:pressed{
+    background-color: #8BF;
+}
+
+/* only for MenuButtonPopup */
+QToolButton[popupMode="1"]{
+    padding-left: 1px;
+    padding-right: 15px; /* make way for the popup button */
+    border: 1px solid #999999;
+    min-height: 15px;
+    /*background: qlineargradient(x1:0, y1:0 ,x2:0, y2:1
+        stop: 0 #EEEEEF, stop: 0.05 #DADADF, stop: 0.5 #DADADF
+        stop: 0.95 #EEEEEF stop: 1#EEEEEF)*/
+}
+QToolButton[popupMode="1"]:hover{
+    background-color: #8BF;
+    border-color: #59F;
+}
+QToolButton[popupMode="1"]:pressed{
+    border-width: 1px;
+    background-color: #59F;
+    border-color: #999999;
+}
+QToolButton::menu-button {
+    border: 1px solid #999999;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    width: 16px;
+}
+
+/* =============================================== */
+/* ToolBox                                         */
+/* =============================================== */
+QToolBox{
+    border: 1px solid #999999;
+}
+QToolBox::tab {
+    background: #EEEEEF;
+    border: 1px solid #999999;
+    border-radius: 1px;
+}
+QToolBox::tab:hover {
+    background-color: #8BF;
+    border-color: transparent;
+}
+QToolBox::tab:pressed {
+    background-color: #59F;
+    border-color: transparent;
+}
+QToolBox::tab:selected {
+    font-weight: bold;
+    border-color: #8BF;
+}

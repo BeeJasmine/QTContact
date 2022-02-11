@@ -4,5 +4,7 @@
         <file>ress/image/homersimpson.png</file>
         <file>ress/image/boss.png</file>
     </qresource>
-    <qresource prefix="/css"/>
+    <qresource prefix="/css">
+        <file>ress/qss/jour.qss</file>
+    </qresource>
 </RCC>

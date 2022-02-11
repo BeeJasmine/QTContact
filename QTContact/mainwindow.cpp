@@ -1,6 +1,5 @@
 #include <QDebug>
 
-
 #include <QLabel>
 #include <QLineEdit>
 #include <QMessageBox>
@@ -19,21 +18,15 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)//, pMap( new ContactMap() )
+    , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->fieldDetailContact->setReadOnly(true);
 
-    // read configuration: /home/michael/.config/AJC_ProjectQt/QTContact.ini
-    // Native or IniFormat equivalent on unix, user scope should be in personal directory
-    QSettings myConfig(QSettings::IniFormat, QSettings::UserScope,
-                       // organization name , project name
-                       "AJC_ProjectQt", "QTContact");
-    qDebug() << "Const Main Qsetting name :" << myConfig.fileName();
-    // DB filepath retrieved from CustomerDAO
-    // to use for preference
-    // exemple
-    //myConfig.setValue("infos/fichier","txtext.txt");
+    // load user settings
+    loadUserSettings();
 
+    //this->setStyleSheet( )
     pMap = new ContactMap();
 
     // default checkButtons activated
@@ -53,14 +46,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect( ui->listContact, &QListWidget::itemDoubleClicked,
              this, &MainWindow::selectedContact);
     // want to clear the detail if selection is lost
-    /* not working
-    connect(ui->listContact, &QListWidget::itemSelectionChanged,
-            [this]() {
-                qDebug() << "itemSelectionChanged";
-                ui->listContact->clear();
-                //if( ui->listContact->is)
-            });
-     */
 }
 
 /*
@@ -111,6 +96,38 @@ void MainWindow::open_dialog()
 
 }
 */
+
+// data relative to the database are used in CustomerDAO
+void MainWindow::loadUserSettings() {
+
+    // read configuration: /home/michael/.config/AJC_ProjectQt/QTContact.ini
+    // Native or IniFormat equivalent on unix, user scope should be in personal directory
+    QSettings myConfig(QSettings::IniFormat, QSettings::UserScope,
+                       // organization name , project name
+                       "AJC_ProjectQt", "QTContact");
+    qDebug() << "User Settings user file located at :" << myConfig.fileName();
+
+    QString pathQSS =":/css/ress/qss/";
+    QFile fileINI( myConfig.fileName() );
+    if( fileINI.exists() ) {
+        qDebug() << "fileINI exists";
+        pathQSS += myConfig.value("preference/css").toString();
+
+    } else {
+        qDebug() << "fileINI does not exists, you should add the path to the databse manually...sorry !!";
+        // set default value, it will create the file ?
+        myConfig.setValue("db/filepath","/home/your-name/.../dbContacts.db");
+        myConfig.setValue("preference/css", "jour.qss");
+        pathQSS += "jour.qss";
+    }
+
+    QFile fileQSS( pathQSS );
+    bool openOK = fileQSS.open(QIODevice::ReadOnly);
+    if(openOK) {
+        this->setStyleSheet(fileQSS.readAll());
+        fileQSS.close();
+    }
+}
 
 void MainWindow::initToolBar()
 {
@@ -231,7 +248,6 @@ void MainWindow::updateDetailsContact( Contact * contact )
 
 void MainWindow::closeEvent(QCloseEvent * eventClose)
 {
-
     QMessageBox msgBox(this);
     msgBox.setText("Voulez vous Quitter ?");
     msgBox.setInformativeText("Quitter ?");
@@ -330,7 +346,5 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_action_Ajouter_contact_triggered()
 {
     DialogAdd myDialog;
-
     myDialog.exec();
-
 }
