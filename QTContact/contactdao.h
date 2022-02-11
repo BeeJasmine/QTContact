@@ -27,7 +27,7 @@ public:
     /** Requetes  **/
     QVector<Contact*> getAllContacts() const;
 
-
+    void insertContact(Contact * contact);
 
 private:
     ContactDAO();

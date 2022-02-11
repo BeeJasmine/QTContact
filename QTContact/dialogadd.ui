@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>398</width>
-    <height>438</height>
+    <width>393</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>380</y>
+     <y>430</y>
      <width>341</width>
      <height>32</height>
     </rect>
@@ -33,7 +33,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>90</y>
+     <y>100</y>
      <width>67</width>
      <height>17</height>
     </rect>
@@ -46,7 +46,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>120</y>
+     <y>130</y>
      <width>67</width>
      <height>17</height>
     </rect>
@@ -59,8 +59,8 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>180</y>
-     <width>131</width>
+     <y>160</y>
+     <width>151</width>
      <height>17</height>
     </rect>
    </property>
@@ -72,7 +72,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>150</y>
+     <y>190</y>
      <width>91</width>
      <height>21</height>
     </rect>
@@ -85,7 +85,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>30</y>
+     <y>10</y>
      <width>301</width>
      <height>41</height>
     </rect>
@@ -100,8 +100,8 @@
   <widget class="QLineEdit" name="lineEdit_name">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>80</y>
+     <x>230</x>
+     <y>90</y>
      <width>113</width>
      <height>25</height>
     </rect>
@@ -110,8 +110,198 @@
   <widget class="QLineEdit" name="lineEdit_firstname">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>110</y>
+     <x>230</x>
+     <y>120</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_company">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>190</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_birth">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>160</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_titleAdress">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>270</y>
+     <width>301</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Adresse</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioBtn_Perso">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>50</y>
+     <width>112</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Particulier</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioBtn_Pro">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>50</y>
+     <width>112</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Professionel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_status">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Statut</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_street">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>310</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Rue</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_street">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>300</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_complement">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>340</y>
+     <width>121</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Complement</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_complement">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>330</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_cp">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>370</y>
+     <width>111</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Code Postal</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_cp">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>360</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_city">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>400</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Ville</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_city">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>390</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbl_email">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>220</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Email</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_email">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>220</y>
      <width>113</width>
      <height>25</height>
     </rect>

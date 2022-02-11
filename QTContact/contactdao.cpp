@@ -71,6 +71,35 @@ QVector<Contact *> ContactDAO::getAllContacts() const
     return vecContact;
 }
 
+void ContactDAO::insertContact(Contact *contact) //prendre Contact* en entree!!!
+{
+        QString req = "insert into contacts(prenom, nom, rue, Complement, cp, Ville) "
+                      "VALUES(:pPren, :pNom, :pRue, :pComplement, :pCp, :pVille)";
+        QSqlQuery query;
+
+        query.prepare(req);
+        query.bindValue(":pNom", contact->getLastName());
+        query.bindValue(":pPren", contact->getFirstName());
+        query.bindValue(":pRue", contact->getLabelAdress());
+        query.bindValue(":pComplement", contact->getComplementAdress());
+        query.bindValue(":pCp", contact->getPostalCode());
+        query.bindValue(":pVille", contact->getCity());
+
+                bool reqOk = query.exec(); // reussite ?
+                qDebug() << "Insertion ok:"<< reqOk;
+
+                if (reqOk)
+                {
+                    int nbInserted = query.numRowsAffected();
+                    qDebug() << "Nb Insertions : " << nbInserted;
+                }
+
+                else
+                {
+                    qDebug()<< QString("Bad Query, It's inactive: %1").arg(query.lastError().text());
+                }
+}
+
 void ContactDAO::fillCommonDataFromQuery(Contact *contact, QSqlQuery &query) const
 {
     contact->setIdContact( query.value("idContact").toInt() );
