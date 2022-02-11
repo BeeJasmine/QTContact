@@ -3,23 +3,31 @@
 #include <QString>
 #include <QSqlQuery>
 #include <QDebug>
+#include <QSettings>
 
 #include "contactdao.h"
 #include "privatecontact.h"
 #include "professionalcontact.h"
 
 
-const QString DATABASE_FILENAME = "../dbContacts.db";
+//const QString DATABASE_FILENAME = "../dbContacts.db";
 const QString DB = "QSQLITE";
-
 
 ContactDAO::ContactDAO()
     : connexionDB( new QSqlDatabase(  QSqlDatabase::addDatabase( DB )))
 {
-    connexionDB->setDatabaseName( DATABASE_FILENAME );
+
+    qInfo() << "Construction DAO singleton";
+    QSettings myConfig(QSettings::IniFormat, QSettings::UserScope,
+                       // organization name , project name
+                       "AJC_ProjectQt", "QTContact");
+    QString filePathDB  = myConfig.value("db/filepath").toString();
+    qInfo() << "Will open the database: " << filePathDB;
+    connexionDB->setDatabaseName( filePathDB );
+    //connexionDB->setDatabaseName( DATABASE_FILENAME );
     connexionDB->open();
     if ( connexionDB->isOpenError() ) {
-        qInfo() << "Error opening database :";
+        qWarning() << "Error opening database :";
         connexionDB->lastError().text();
     }
 }

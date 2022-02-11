@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QSettings>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -13,12 +14,26 @@
 #include "professionalcontact.h"
 #include "privatecontact.h"
 
+// just to set the filepath
+#include "contactdao.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)//, pMap( new ContactMap() )
 {
     ui->setupUi(this);
-    qDebug() << "Const Main";
+
+    // read configuration: /home/michael/.config/AJC_ProjectQt/QTContact.ini
+    // Native or IniFormat equivalent on unix, user scope should be in personal directory
+    QSettings myConfig(QSettings::IniFormat, QSettings::UserScope,
+                       // organization name , project name
+                       "AJC_ProjectQt", "QTContact");
+    qDebug() << "Const Main Qsetting name :" << myConfig.fileName();
+    // DB filepath retrieved from CustomerDAO
+    // to use for preference
+    // exemple
+    //myConfig.setValue("infos/fichier","txtext.txt");
+
     pMap = new ContactMap();
 
     // default checkButtons activated
@@ -83,22 +98,23 @@ void MainWindow::fillListContact( QVector<Contact*> contactToPrint )
         IamFriend = false;
 
         if ( dynamic_cast<ProfessionalContact *>( ptContact ) != nullptr )  {
-            qDebug() << "Je suis un Pro";
+            //qDebug() << "Je suis un Pro";
             IamPro = true;
         }
 
         if(  dynamic_cast<PrivateContact *>( ptContact ) != nullptr ) {
-            qDebug() << "Je suis un ami";
+            //qDebug() << "Je suis un ami";
             IamFriend = true;
         }
 
-         qDebug()<<"Je suis la valeur de IamFriend"<<IamFriend; //TRUE (peut-être car la dernière valeur de la map est un ami ??)
+        // qDebug()<<"Je suis la valeur de IamFriend"<<IamFriend; //TRUE (peut-être car la dernière valeur de la map est un ami ??)
         if( IamFriend && ui->chkProfessional->isChecked() )
+            // may factorize, addItemToListContact( private/pro )
             ui->listContact->addItem(
                     new QListWidgetItem( QIcon(":/images/ress/image/homersimpson.png"),
                                 QString("%1, %2").arg(ptContact->getLastName())
                                                  .arg(ptContact->getFirstName())));
-        qDebug()<<"Je suis la valeur de IamPro"<<IamPro; //FALSE (peut-être car la dernière valeur de la map est un ami et non un pro??)
+        // qDebug()<<"Je suis la valeur de IamPro"<<IamPro; //FALSE (peut-être car la dernière valeur de la map est un ami et non un pro??)
         if( IamPro && ui->chkPrivate->isChecked() )
             ui->listContact->addItem(
                         new QListWidgetItem( QIcon(":/images/ress/image/boss.png"),
