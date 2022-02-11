@@ -17,7 +17,6 @@ class DialogAdd : public QDialog
 public:
     explicit DialogAdd(QWidget *parent = nullptr);
     ~DialogAdd();
-    //void insertContact2(Contact * contact);
 
 private slots:
     void on_buttonBox_accepted();

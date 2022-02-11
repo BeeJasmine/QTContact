@@ -105,10 +105,26 @@ void DialogAdd::on_buttonBox_accepted()
          city = (ui->lineEdit_city->text()); // pas de règle dans la db
      }
 
-     QString email; //^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$0000
+     QString email; //^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$
      if((ui->lineEdit_email->text())!=nullptr)
      {
-         email = (ui->lineEdit_email->text()); // pas de règle dans la db
+
+         QRegExp regExp("^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+
+
+            if (regExp.exactMatch(ui->lineEdit_email->text()) ==true)
+            {
+                email = (ui->lineEdit_email->text());
+            }
+
+            else
+            {
+                ui->lbl_email->setText("Email \n Veuillez entrer une adresse format nom@mail.com ");
+            }
+
+
+
+
      }
 
      QString stringDate;
@@ -120,6 +136,15 @@ void DialogAdd::on_buttonBox_accepted()
 
          birthdate.fromString(stringDate,"YYYY-MM-dd");
      }
+
+
+     QString companyName;
+     if((ui->lineEdit_company->text())!=nullptr)
+     {
+         email = (ui->lineEdit_company->text()); // pas de règle dans la db
+     }
+
+
 
     //qDebug()<< firstname << lastname;
 
@@ -151,7 +176,8 @@ void DialogAdd::on_buttonBox_accepted()
             contactPro->setPostalCode(postalCode);
             contactPro->setCity(city);
             contactPro->setEmailAdress(email);
-            ContactDAO::instance().insertContact(contactPro);
+            contactPro->setCompanyName(companyName);
+            ContactDAO::instance().insertProfessionalContact(contactPro);
         }
 
 
@@ -165,7 +191,7 @@ void DialogAdd::on_buttonBox_accepted()
             contactPerso->setPostalCode(postalCode);
             contactPerso->setCity(city);
             contactPerso->setBirthDate(birthdate);
-            ContactDAO::instance().insertContact(contactPerso);
+            ContactDAO::instance().insertPrivateContact(contactPerso);
         }
 
     //->perso

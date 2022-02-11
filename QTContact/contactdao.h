@@ -2,6 +2,8 @@
 #define CONTACTDAO_H
 
 #include "contact.h"
+#include "privatecontact.h"
+#include "professionalcontact.h"
 
 // forward declaration
 class QSqlDatabase;
@@ -24,7 +26,8 @@ public:
     /** Requetes  **/
     QVector<Contact*> getAllContacts() const;
 
-    void insertContact(Contact * contact);
+    void insertPrivateContact(PrivateContact * contact);
+    void insertProfessionalContact(ProfessionalContact * contact);
 
 private:
     ContactDAO();
