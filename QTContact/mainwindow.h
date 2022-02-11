@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QCloseEvent>
+#include <QLineEdit>
 #include <QMainWindow>
 #include "contactmap.h"
 #include "dialogadd.h"
@@ -24,7 +25,8 @@ public:
 
 private slots:
     void on_actionQuitter_triggered();
-    void open_dialog();
+    void slotCkeckBoxOfListContact();
+    //void open_dialog();
 
     void on_action_Ajouter_contact_triggered();
 
@@ -34,6 +36,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     ContactMap * pMap;
+    QLineEdit* inputSearch; // search name filed in toolbar
 
     void initToolBar();
     DialogAdd *dialogAdd;

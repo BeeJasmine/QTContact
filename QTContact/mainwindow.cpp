@@ -40,19 +40,19 @@ MainWindow::MainWindow(QWidget *parent)
     ui->chkPrivate->setChecked( true );
     ui->chkProfessional->setChecked(true);
 
+    connect( ui->chkPrivate, &QCheckBox::clicked,
+             [this]() { slotCkeckBoxOfListContact();});
+    connect( ui->chkProfessional, &QCheckBox::clicked,
+             [this]() { slotCkeckBoxOfListContact();});
+
     // fill toolbar
     initToolBar();
 
-    // fill the listWidget
-    // ui->listWidget->addItem( newContact->getNumero() );
+    // fill the listWidget with all contacts
     fillListContact();
-
-
-
-    // connection
 }
 
-
+/*
 void MainWindow::open_dialog()
 {
     QDialog *dialogue = new QDialog(this);
@@ -99,19 +99,19 @@ void MainWindow::open_dialog()
       QObject::connect(btnQuit, SIGNAL(clicked()), dialogue, SLOT(close()));
 
 }
-
+*/
 
 void MainWindow::initToolBar()
 {
     QToolBar * toolbar = ui->toolBar;
 
     QLabel* label = new QLabel("Recherche :"); //, this);
-    QLineEdit* lineEd = new QLineEdit(); // this
-    lineEd->setMinimumWidth(150);
+    inputSearch = new QLineEdit(); // this
+    inputSearch->setMinimumWidth(150);
     //lineEd->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred);
-    lineEd->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
+    inputSearch->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
     toolbar->addWidget(label);
-    toolbar->addWidget(lineEd);
+    toolbar->addWidget(inputSearch);
     toolbar->addSeparator();
 
     //QAction *qActionAdd = toolbar->addAction(QIcon(":/images/ress/image/plus.png"),"Nouveau contact");
@@ -129,7 +129,7 @@ void MainWindow::initToolBar()
 
 
     // connectionon_action_Ajouter_contact_triggered
-    connect( lineEd, &QLineEdit::textChanged,
+    connect( inputSearch, &QLineEdit::textChanged,
              [this](const QString & text) {
                 qDebug() << "text changed" << text;
                 fillListContact ( pMap->getFilterName(text) );
@@ -188,7 +188,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionQuitter_triggered()
 {
-      this->close();
+    this->close();
+}
+
+void MainWindow::slotCkeckBoxOfListContact()
+{
+    qDebug() << "Check box ";
+    // check if restricted by the search field in toolbar
+    if( ! inputSearch->text().isEmpty() )
+        fillListContact ( pMap->getFilterName( inputSearch->text() ) );
+    // default, just refresh with all
+    else
+        fillListContact();
 }
 
 void MainWindow::closeEvent(QCloseEvent * eventClose)
