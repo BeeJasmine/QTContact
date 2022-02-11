@@ -1,5 +1,7 @@
 # QTContact
 
+QTContact (à prononcer CuteContact) est un gestionnaire d'une base de données de contacts programmé C++ avec le créateur d'interface orienté objet QT.
+
 ## Usage
 
 Retrouvez les instructions en console pour charger votre base de données.
