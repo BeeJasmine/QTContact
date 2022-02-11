@@ -15,18 +15,21 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     privatecontact.cpp \
-    professionalcontact.cpp
+    professionalcontact.cpp \
+    dialogadd.cpp
 
 HEADERS += \
     contact.h \
     contactdao.h \
     contactmap.h \
+    dialogadd.h \
     mainwindow.h \
     privatecontact.h \
     professionalcontact.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    dialogadd.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
