@@ -4,12 +4,13 @@
 #include <QDialog>
 #include "contact.h"
 
-
-
 namespace Ui {
 class DialogAdd;
 }
 
+/**
+ * @brief The DialogAdd class to add a new Contact
+ */
 class DialogAdd : public QDialog
 {
     Q_OBJECT

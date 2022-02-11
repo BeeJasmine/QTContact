@@ -20,7 +20,7 @@ DialogAdd::DialogAdd(QWidget *parent) :
     btnGrp->addButton( ui->radioBtn_Pro, 1);
 
     connect(ui->radioBtn_Perso, SIGNAL(toggled(bool)), this, SLOT(refreshRadioBtn(bool)));
-
+    ui->radioBtn_Perso->setChecked(true);
 }
 
 void DialogAdd::refreshRadioBtn(bool)
@@ -45,9 +45,7 @@ void DialogAdd::refreshRadioBtn(bool)
         ui->lbl_email->setVisible(true);
         ui->lbl_company->show();
         ui->lineEdit_company->setVisible(true);
-
     }
-
 }
 
 DialogAdd::~DialogAdd()
@@ -55,21 +53,13 @@ DialogAdd::~DialogAdd()
     delete ui;
 }
 
-/*
-void DialogAdd::insertContact2(Contact *contact)
-{
-    insertContact(contact);
-}
-*/
-
 void DialogAdd::on_buttonBox_accepted()
 {
     QString firstname;
-                if((ui->lineEdit_firstname->text()).size()<30 && (ui->lineEdit_firstname->text())!=nullptr)
-                {
-                    firstname=(ui->lineEdit_firstname->text()).toLower(); //la première lettre en capitale ??
-                }
-
+    if((ui->lineEdit_firstname->text()).size()<30 && (ui->lineEdit_firstname->text())!=nullptr)
+    {
+        firstname=(ui->lineEdit_firstname->text()).toLower(); //la première lettre en capitale ??
+    }
 
     QString lastname;
     if((ui->lineEdit_name->text()).size()<30 && (ui->lineEdit_name->text())!=nullptr)
@@ -92,7 +82,6 @@ void DialogAdd::on_buttonBox_accepted()
         street = (ui->lineEdit_complement->text()).toLower(); // pas de règle dans la db
     }
 
-
     QString postalCode; //^[0-9]{5}$
     if((ui->lineEdit_name->text()).size()==5 &&(ui->lineEdit_cp->text())!=nullptr)
     {
@@ -111,32 +100,24 @@ void DialogAdd::on_buttonBox_accepted()
 
          QRegExp regExp("^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
 
+        if (regExp.exactMatch(ui->lineEdit_email->text()) ==true)
+        {
+            email = (ui->lineEdit_email->text());
+        }
 
-            if (regExp.exactMatch(ui->lineEdit_email->text()) ==true)
-            {
-                email = (ui->lineEdit_email->text());
-            }
-
-            else
-            {
-                ui->lbl_email->setText("Email \n Veuillez entrer une adresse format nom@mail.com ");
-            }
-
-
-
-
+        else
+        {
+            ui->lbl_email->setText("Email \n Veuillez entrer une adresse format nom@mail.com ");
+        }
      }
 
      QString stringDate;
-      QDate birthdate;
+     QDate birthdate;
      if((ui->lineEdit_birth->text())!=nullptr)
      {
          stringDate = (ui->lineEdit_birth->text()); // pas de règle dans la db
-
-
          birthdate.fromString(stringDate,"YYYY-MM-dd");
      }
-
 
      QString companyName;
      if((ui->lineEdit_company->text())!=nullptr)
@@ -144,30 +125,10 @@ void DialogAdd::on_buttonBox_accepted()
          email = (ui->lineEdit_company->text()); // pas de règle dans la db
      }
 
-
-
-    //qDebug()<< firstname << lastname;
-
-    // check if radio button ischecked()
-
-     /*
-    Contact* contact= new Contact;
-
-    contact->setFirstName(firstname);
-    contact->setLastName(lastname);
-    contact->setLabelAdress(street);
-    contact->setComplementAdress(complement);
-    contact->setPostalCode(postalCode);
-    contact->setCity(city);
-*/
-
-    //-> pro
     //instance d'un contact contact pro, remplir avec les setter
 
-        if (ui->radioBtn_Pro->isChecked())
+    if (ui->radioBtn_Pro->isChecked())
         {
-            //qDebug()<< "checkId =1 ??" << btnGrp->checkedId();
-            //Contact* contactPro= new ProfessionalContact;
             ProfessionalContact* contactPro = new ProfessionalContact;
             contactPro->setFirstName(firstname);
             contactPro->setLastName(lastname);
@@ -180,8 +141,7 @@ void DialogAdd::on_buttonBox_accepted()
             ContactDAO::instance().insertProfessionalContact(contactPro);
         }
 
-
-       else
+    else
         {
             PrivateContact* contactPerso= new PrivateContact;
             contactPerso->setFirstName(firstname);
@@ -191,48 +151,7 @@ void DialogAdd::on_buttonBox_accepted()
             contactPerso->setPostalCode(postalCode);
             contactPerso->setCity(city);
             contactPerso->setBirthDate(birthdate);
+            qDebug() << "birthday " << contactPerso->getBirthDate();
             ContactDAO::instance().insertPrivateContact(contactPerso);
         }
-
-    //->perso
-    //instance d'un contact contact perso, remplir avec les setter
-
-
-    // eventuellement check dans la fonction à suivre :
-    // La request :-) --> dans la fonction insertContact(Contact* contact)
-
-    //ContactDAO::instance().insertContact(contact);
-
-
-
-    //TEMPORAIRE... -> UTILISEZ CONTACTDAO
-    //QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    //db.setDatabaseName("../dbContacts.db");
-
-  //  if ( db.open() )// à implémenter dans une nouvelle fonction de ContactDAO ???
-  //  {
-
-        //QSqlQuery query = "insert into contacts(firstname, lastname) VALUES(:pPren, :pNom)";
-
-        //QString req = "insert into contacts(firstname, lastname) VALUES(:pPren, :pNom)";
-        //QSqlQuery query(db);
-        //query.prepare(req);
-
-        //query.bindValue(":pNom", lastname);
-        //query.bindValue(":pPren", firstname);
-
-        //bool reqOk = query.exec(); // reussite ?
-        //qDebug() << "Insertion ok:"<< reqOk;
-
-        //if (reqOk)
-        //{
-        //    int nbInserted = query.numRowsAffected();
-        //    qDebug() << "Nb Insertions : " << nbInserted;
-        //}
-
-   //     db.close();
-
- //   }
 }
-
-

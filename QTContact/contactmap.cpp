@@ -4,20 +4,20 @@
 
 ContactMap::ContactMap()
 {
-    qDebug() << "contr. ContactMap ";
-    /*bool ret =*/
     initFromDB();
-    qDebug() << "Size of mapContact " << mapContact.size();
 }
 
 bool ContactMap::initFromDB()
 {
+    // C'est pas beau, on avait oublié de rajouter le nouveau contact dans la map...
+    // moyen le plus rapide de tout recharger
+    if( ! mapContact.isEmpty() ) {
+        qDeleteAll( mapContact );
+        mapContact.clear();
+    }
+
     QVector<Contact*> allContacts = ContactDAO::instance().getAllContacts();
-
-    qDebug() << " Init  size from DB " << allContacts.size();
-
     // remplir la map
-    // QMap::iterator	insert(const Key &key, const T &value)
     for( auto contact : allContacts)
         mapContact.insert( contact->getIdContact(), contact );
 
@@ -49,25 +49,19 @@ QVector<Contact *> ContactMap::getFilterName(const QString &text)
 
 Contact *ContactMap::loadContactWithName(const QString &lastName, const QString &firstName)
 {
-    //int contactId = 0;
-    //Contact * contact;
-
     for( auto it = mapContact.begin(); it != mapContact.end(); it++ ) {
         if( ( it.value()->getLastName() == lastName)
          || ( it.value()->getFirstName() == firstName ) ) {
-            //contactId = it.key();
-            //break;
             return it.value();
         }
-
     }
-    //int contactId = it.key();
     return nullptr;
 }
 
 ContactMap::~ContactMap()
 {
-    //qDeleteAll( mapContact );
+    qDeleteAll( mapContact );
+    mapContact.clear();
 }
 
 

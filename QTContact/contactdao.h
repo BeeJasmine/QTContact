@@ -19,13 +19,11 @@ class QSqlQuery;
 class ContactDAO
 {
 public:
-
     static ContactDAO& instance();
     ~ContactDAO();
 
     /** Requetes  **/
     QVector<Contact*> getAllContacts() const;
-
     void insertPrivateContact(PrivateContact * contact);
     void insertProfessionalContact(ProfessionalContact * contact);
 

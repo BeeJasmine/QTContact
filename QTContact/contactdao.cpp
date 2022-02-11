@@ -9,8 +9,6 @@
 #include "privatecontact.h"
 #include "professionalcontact.h"
 
-
-//const QString DATABASE_FILENAME = "../dbContacts.db";
 const QString DB = "QSQLITE";
 
 ContactDAO::ContactDAO()
@@ -24,7 +22,7 @@ ContactDAO::ContactDAO()
     QString filePathDB  = myConfig.value("db/filepath").toString();
     qInfo() << "Will open the database: " << filePathDB;
     connexionDB->setDatabaseName( filePathDB );
-    //connexionDB->setDatabaseName( DATABASE_FILENAME );
+
     connexionDB->open();
     if ( connexionDB->isOpenError() ) {
         qWarning() << "Error opening database :";
@@ -85,26 +83,27 @@ void ContactDAO::insertPrivateContact(PrivateContact *contact) //prendre Contact
         query.bindValue(":pComplement", contact->getComplementAdress());
         query.bindValue(":pCp", contact->getPostalCode());
         query.bindValue(":pVille", contact->getCity());
+        query.bindValue(":pdtNaissance", contact->getBirthDate());
 
-                bool reqOk = query.exec(); // reussite ?
-                qDebug() << "Insertion ok:"<< reqOk;
+        bool reqOk = query.exec(); // reussite ?
+        qDebug() << "Insertion ok:"<< reqOk;
 
-                if (reqOk)
-                {
-                    int nbInserted = query.numRowsAffected();
-                    qDebug() << "Nb Insertions : " << nbInserted;
-                }
+        if (reqOk)
+        {
+            int nbInserted = query.numRowsAffected();
+            qDebug() << "Nb Insertions : " << nbInserted;
+        }
 
-                else
-                {
-                    qDebug()<< QString("Bad Query, It's inactive: %1").arg(query.lastError().text());
-                }
+        else
+        {
+            qDebug()<< QString("Bad Query, It's inactive: %1").arg(query.lastError().text());
+        }
 }
 
 void ContactDAO::insertProfessionalContact(ProfessionalContact *contact)
 {
     QString req = "insert into contacts(prenom, nom, rue, Complement, cp, Ville, mail, entreprise)"
-                  "VALUES(:pPren, :pNom, :pRue, :pComplement, :pCp, :pVille, :pEmail, pEntreprise)";
+                  "VALUES(:pPren, :pNom, :pRue, :pComplement, :pCp, :pVille, :pEmail, :pEntreprise)";
         QSqlQuery query;
 
         query.prepare(req);
@@ -117,65 +116,17 @@ void ContactDAO::insertProfessionalContact(ProfessionalContact *contact)
         query.bindValue(":pEmail", contact->getEmailAdress());
         query.bindValue(":pEntreprise", contact->getCompanyName());
 
-
-                bool reqOk = query.exec(); // reussite ?
-                qDebug() << "Insertion ok:"<< reqOk;
-
-                if (reqOk)
-                {
-                    int nbInserted = query.numRowsAffected();
-                    qDebug() << "Nb Insertions : " << nbInserted;
-                }
-
-                else
-                {
-                    qDebug()<< QString("Bad Query, It's inactive: %1").arg(query.lastError().text());
-                }
-}
-
-
-/*
-void ContactDAO::insertContact(Contact *contact) //prendre Contact* en entree!!!
-{
-
-
-        QString req = "insert into contacts(prenom, nom, rue, Complement, cp, Ville, dtNaissance,) "
-                      "VALUES(:pPren, :pNom, :pRue, :pComplement, :pCp, :pVille, :pdtNaissance)";
-        QSqlQuery query;
-
-            query.prepare(req);
-            query.bindValue(":pNom", contact->getLastName());
-            query.bindValue(":pPren", contact->getFirstName());
-            query.bindValue(":pRue", contact->getLabelAdress());
-            query.bindValue(":pComplement", contact->getComplementAdress());
-            query.bindValue(":pCp", contact->getPostalCode());
-            query.bindValue(":pVille", contact->getCity());
-
-         PrivateContact* privContact = dynamic_cast<PrivateContact *>( privContact );
-        if ( privContact != nullptr )
-
+        bool reqOk = query.exec(); // reussite ?
+        if (reqOk)
         {
-
-            query.bindValue(":pdtNaissance", privContact->getBirthDate());
+            int nbInserted = query.numRowsAffected();
+            qDebug() << "Nb Insertions : " << nbInserted;
         }
-
-                bool reqOk = query.exec(); // reussite ?
-                qDebug() << "Insertion ok:"<< reqOk;
-
-                if (reqOk)
-                {
-                    int nbInserted = query.numRowsAffected();
-                    qDebug() << "Nb Insertions : " << nbInserted;
-                }
-
-                else
-                {
-                    qDebug()<< QString("Bad Query, It's inactive: %1").arg(query.lastError().text());
-                }
-
+        else
+        {
+            qDebug()<< QString("Bad Query, It's inactive: %1").arg(query.lastError().text());
+        }
 }
-*/
-
 
 void ContactDAO::fillCommonDataFromQuery(Contact *contact, QSqlQuery &query) const
 {
@@ -188,7 +139,6 @@ void ContactDAO::fillCommonDataFromQuery(Contact *contact, QSqlQuery &query) con
     contact->setCity( query.value("Ville").toString() );
     contact->setPostalCode( query.value("cp").toString() );
 }
-
 
 ContactDAO::~ContactDAO()
 {

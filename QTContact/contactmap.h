@@ -9,19 +9,16 @@ class ContactMap
 public:
     ContactMap();
     ~ContactMap();
-    // ContactPro getContactPro()
 
-    //template<typename Func>
     QVector<Contact*> getAllContact();
-
     /** accept for any occurence of the substring text in firstName or LastName **/
     QVector<Contact*> getFilterName(const QString & text);
-
+    /** search exact match, otherwise nullptr **/
     Contact* loadContactWithName( const QString& lastName,
                                   const QString& firstName );
 
-private:
     bool initFromDB();
+private:
 
     QMap<int, Contact*> mapContact;
 };
