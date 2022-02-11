@@ -52,6 +52,15 @@ MainWindow::MainWindow(QWidget *parent)
     fillListContact();
     connect( ui->listContact, &QListWidget::itemDoubleClicked,
              this, &MainWindow::selectedContact);
+    // want to clear the detail if selection is lost
+    /* not working
+    connect(ui->listContact, &QListWidget::itemSelectionChanged,
+            [this]() {
+                qDebug() << "itemSelectionChanged";
+                ui->listContact->clear();
+                //if( ui->listContact->is)
+            });
+     */
 }
 
 /*
@@ -129,15 +138,12 @@ void MainWindow::initToolBar()
     QObject::connect( dialogAdd, SIGNAL(triggered()),
                       this, SLOT(on_action_Ajouter_contact_triggered()));
 
-
     // connectionon_action_Ajouter_contact_triggered
     connect( inputSearch, &QLineEdit::textChanged,
              [this](const QString & text) {
                 qDebug() << "text changed" << text;
                 fillListContact ( pMap->getFilterName(text) );
     });
-
-
 }
 
 
@@ -206,11 +212,11 @@ void MainWindow::slotCkeckBoxOfListContact()
 
 void MainWindow::selectedContact( QListWidgetItem *item)
 {
-    qDebug() << "Doubleclick text: " << item->text();
-    qDebug() << "Doubleclick text: " << item->data(Qt::UserRole).toStringList();
+    //qDebug() << "Doubleclick text: " << item->text();
+    //qDebug() << "Doubleclick text: " << item->data(Qt::UserRole).toStringList();
     QStringList lastAndfirstName = item->text().split(",");
     Contact * contact = pMap->loadContactWithName( lastAndfirstName.at(0).trimmed(), lastAndfirstName.at(1).trimmed());
-    qDebug() << "contact: city: " << contact->getCity();
+    //qDebug() << "contact: city: " << contact->getCity();
     updateDetailsContact( contact );
 }
 
