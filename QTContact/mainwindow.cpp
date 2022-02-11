@@ -47,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
     // ui->listWidget->addItem( newContact->getNumero() );
     fillListContact();
 
+
+
     // connection
 }
 
@@ -121,15 +123,19 @@ void MainWindow::initToolBar()
     toolbar->addAction(dialogAdd);
     dialogAdd->setShortcut(QKeySequence("Ctrl+A"));
     dialogAdd->setIcon(QIcon(":/images/ress/image/plus.png"));
-    QObject::connect(dialogAdd, SIGNAL(triggered()), this, SLOT(open_dialog()));
+    //QObject::connect(dialogAdd, SIGNAL(triggered()), this, SLOT(open_dialog()));
+    QObject::connect( dialogAdd, SIGNAL(triggered()),
+                      this, SLOT(on_action_Ajouter_contact_triggered()));
 
 
-    // connection
+    // connectionon_action_Ajouter_contact_triggered
     connect( lineEd, &QLineEdit::textChanged,
              [this](const QString & text) {
                 qDebug() << "text changed" << text;
                 fillListContact ( pMap->getFilterName(text) );
     });
+
+
 }
 
 
@@ -282,3 +288,11 @@ void MainWindow::on_pushButton_2_clicked()
 }
 
 */
+
+void MainWindow::on_action_Ajouter_contact_triggered()
+{
+    DialogAdd myDialog;
+
+    myDialog.exec();
+
+}

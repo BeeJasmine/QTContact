@@ -26,6 +26,8 @@ private slots:
     void on_actionQuitter_triggered();
     void open_dialog();
 
+    void on_action_Ajouter_contact_triggered();
+
 protected:
     void closeEvent(QCloseEvent *);
 
